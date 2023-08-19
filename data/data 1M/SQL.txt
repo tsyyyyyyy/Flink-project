@@ -1,0 +1,82 @@
+登录：mysql -u root -p --local-infile=1
+
+
+DROP TABLE NATION;
+DROP TABLE SUPPLIER;
+DROP TABLE PARTSUPP;
+DROP TABLE PART;
+
+CREATE TABLE PART  ( P_PARTKEY     INTEGER NOT NULL,
+                          P_NAME        VARCHAR(55) NOT NULL,
+                          P_MFGR        CHAR(25) NOT NULL,
+                          P_BRAND       CHAR(10) NOT NULL,
+                          P_TYPE        VARCHAR(25) NOT NULL,
+                          P_SIZE        INTEGER NOT NULL,
+                          P_CONTAINER   CHAR(10) NOT NULL,
+                          P_RETAILPRICE DECIMAL(15,2) NOT NULL,
+                          P_COMMENT     VARCHAR(23) NOT NULL );
+
+CREATE TABLE NATION  ( N_NATIONKEY  INTEGER NOT NULL,
+                            N_NAME       CHAR(25) NOT NULL,
+                            N_REGIONKEY  INTEGER NOT NULL,
+                            N_COMMENT    VARCHAR(152));
+
+CREATE TABLE SUPPLIER ( S_SUPPKEY     INTEGER NOT NULL,
+                             S_NAME        CHAR(25) NOT NULL,
+                             S_ADDRESS     VARCHAR(40) NOT NULL,
+                             S_NATIONKEY   INTEGER NOT NULL,
+                             S_PHONE       CHAR(15) NOT NULL,
+                             S_ACCTBAL     DECIMAL(15,2) NOT NULL,
+                             S_COMMENT     VARCHAR(101) NOT NULL);
+
+CREATE TABLE PARTSUPP ( PS_PARTKEY     INTEGER NOT NULL,
+                             PS_SUPPKEY     INTEGER NOT NULL,
+                             PS_AVAILQTY    INTEGER NOT NULL,
+                             PS_SUPPLYCOST  DECIMAL(15,2)  NOT NULL,
+                             PS_COMMENT     VARCHAR(199) NOT NULL );                            
+
+-- For table NATION
+ALTER TABLE NATION
+ADD PRIMARY KEY (N_NATIONKEY);
+
+ALTER TABLE NATION
+ADD FOREIGN KEY (N_REGIONKEY) references REGION(R_REGIONKEY);
+
+COMMIT WORK;
+
+-- For table SUPPLIER
+ALTER TABLE SUPPLIER
+ADD PRIMARY KEY (S_SUPPKEY);
+
+ALTER TABLE SUPPLIER
+ADD FOREIGN KEY (S_NATIONKEY) references NATION(N_NATIONKEY);
+
+COMMIT WORK;
+
+-- For table PART
+ALTER TABLE PART
+ADD PRIMARY KEY (P_PARTKEY);
+
+-- For table PARTSUPP
+ALTER TABLE PARTSUPP
+ADD PRIMARY KEY (PS_PARTKEY,PS_SUPPKEY);
+
+COMMIT WORK;
+
+ALTER TABLE PARTSUPP
+ADD FOREIGN KEY (PS_SUPPKEY) references SUPPLIER(S_SUPPKEY);
+
+ALTER TABLE PARTSUPP
+ADD FOREIGN KEY (PS_PARTKEY) references PART(P_PARTKEY);
+
+COMMIT WORK;
+
+
+LOAD DATA LOCAL INFILE 'D:/BDT/2023 S1/MSBD5014/Flink_project/data/data 1M/nation.tbl' INTO TABLE NATION FIELDS TERMINATED BY '|'  LINES TERMINATED BY '\n';
+LOAD DATA LOCAL INFILE 'D:/BDT/2023 S1/MSBD5014/Flink_project/data/data 1M/part.tbl' INTO TABLE PART FIELDS TERMINATED BY '|'  LINES TERMINATED BY '\n';
+LOAD DATA LOCAL INFILE 'D:/BDT/2023 S1/MSBD5014/Flink_project/data/data 1M/supplier.tbl' INTO TABLE SUPPLIER FIELDS TERMINATED BY '|'  LINES TERMINATED BY '\n';
+LOAD DATA LOCAL INFILE 'D:/BDT/2023 S1/MSBD5014/Flink_project/data/data 1M/partsupp.tbl' INTO TABLE PARTSUPP FIELDS TERMINATED BY '|'  LINES TERMINATED BY '\n';
+SELECT * FROM NATION INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/nation.txt';
+SELECT * FROM PARTSUPP INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/partsupp.txt';
+SELECT * FROM SUPPLIER INTO OUTFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/supplier.txt';
+

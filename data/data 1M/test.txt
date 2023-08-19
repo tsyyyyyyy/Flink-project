@@ -1,0 +1,7 @@
++	partsupp	47	10	5873	191.92	after the regular dependencies. final, bold pains sleep quickly pend
++	partsupp	3	10	9942	191.92	 unusual, ironic foxes according to the ideas detect furiously alongside of the even, express requests. blithely regular the
++	nation	24	ROMANIA	3	ular asymptotes are about the furious multipliers. express dependencies nag above the ironically ironic account
++	supplier	10	Supplier#000000010	Saygah3gYWMp72i PY	24	34-852-489-8585	3891.91	ing waters. regular requests ar
++	partsupp	47	10	2000	191.92	after the regular dependencies. final, bold pains sleep quickly pend
+-	partsupp	47	10	5873	191.92	after the regular dependencies. final, bold pains sleep quickly pend
+-	partsupp	47	10	2000	191.92	after the regular dependencies. final, bold pains sleep quickly pend
